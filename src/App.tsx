@@ -1,5 +1,5 @@
-import { EmployeesPage } from './pages/EmployeesPage'
+import { EmployeesPage } from './pages/EmployeesPage';
 
 export default function App() {
-  return <EmployeesPage />
+  return <EmployeesPage />;
 }

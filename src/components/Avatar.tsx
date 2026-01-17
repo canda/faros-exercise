@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+
 import { cn } from '../lib/utils';
 
 export function Avatar({
@@ -32,8 +33,8 @@ export function Avatar({
       {!broken && src ? (
         <img
           src={src}
-          alt=""
-          className="h-full w-full object-cover"
+          alt=''
+          className='h-full w-full object-cover'
           onError={() => setBroken(true)}
         />
       ) : (

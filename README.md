@@ -3,9 +3,11 @@
 This repo contains a React + Tailwind (Vite) implementation of the Employees Page UI.
 
 ## Prereqs
+
 - Node.js `24.13.0` (see `.nvmrc`)
 
 ## Run locally
+
 ```bash
 nvm use
 cd web
@@ -16,6 +18,6 @@ npm run dev
 Open the URL printed by Vite (usually `http://localhost:5173`).
 
 ## Notes
+
 - Employee data comes from `web/src/data/employees.json`.
 - Static account icons live in `web/public/icons`.
-

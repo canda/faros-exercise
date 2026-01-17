@@ -1,5 +1,6 @@
-import { type ReactNode, useEffect, useRef } from 'react'
-import { cn } from '../lib/utils'
+import { type ReactNode, useEffect, useRef } from 'react';
+
+import { cn } from '../lib/utils';
 
 export function Popover({
   open,
@@ -9,37 +10,37 @@ export function Popover({
   children,
   className,
 }: {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  align?: 'left' | 'right'
-  trigger: ReactNode
-  children: ReactNode
-  className?: string
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  align?: 'left' | 'right';
+  trigger: ReactNode;
+  children: ReactNode;
+  className?: string;
 }) {
-  const rootRef = useRef<HTMLDivElement | null>(null)
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      if (!open) return
-      if (e.key === 'Escape') onOpenChange(false)
+      if (!open) return;
+      if (e.key === 'Escape') onOpenChange(false);
     }
     function onPointerDown(e: PointerEvent) {
-      if (!open) return
-      const el = rootRef.current
-      if (!el) return
-      if (e.target instanceof Node && el.contains(e.target)) return
-      onOpenChange(false)
+      if (!open) return;
+      const el = rootRef.current;
+      if (!el) return;
+      if (e.target instanceof Node && el.contains(e.target)) return;
+      onOpenChange(false);
     }
-    window.addEventListener('keydown', onKeyDown)
-    window.addEventListener('pointerdown', onPointerDown)
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('pointerdown', onPointerDown);
     return () => {
-      window.removeEventListener('keydown', onKeyDown)
-      window.removeEventListener('pointerdown', onPointerDown)
-    }
-  }, [open, onOpenChange])
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('pointerdown', onPointerDown);
+    };
+  }, [open, onOpenChange]);
 
   return (
-    <div className="relative inline-block" ref={rootRef}>
+    <div className='relative inline-block' ref={rootRef}>
       <div onClick={() => onOpenChange(!open)}>{trigger}</div>
       {open ? (
         <div
@@ -53,6 +54,5 @@ export function Popover({
         </div>
       ) : null}
     </div>
-  )
+  );
 }
-
