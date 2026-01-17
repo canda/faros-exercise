@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { cn } from '../lib/utils'
+import { useMemo, useState } from 'react';
+import { cn } from '../lib/utils';
 
 export function Avatar({
   name,
@@ -7,18 +7,18 @@ export function Avatar({
   size = 28,
   className,
 }: {
-  name: string
-  src?: string
-  size?: number
-  className?: string
+  name: string;
+  src?: string;
+  size?: number;
+  className?: string;
 }) {
-  const [broken, setBroken] = useState(false)
+  const [broken, setBroken] = useState(false);
   const initials = useMemo(() => {
-    const parts = name.trim().split(/\s+/).filter(Boolean)
-    const first = parts[0]?.[0] ?? '?'
-    const last = parts.length > 1 ? parts[parts.length - 1]?.[0] : ''
-    return `${first}${last}`.toUpperCase()
-  }, [name])
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    const first = parts[0]?.[0] ?? '?';
+    const last = parts.length > 1 ? parts[parts.length - 1]?.[0] : '';
+    return `${first}${last}`.toUpperCase();
+  }, [name]);
 
   return (
     <div
@@ -40,6 +40,5 @@ export function Avatar({
         initials
       )}
     </div>
-  )
+  );
 }
-
