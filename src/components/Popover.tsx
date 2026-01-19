@@ -1,21 +1,16 @@
 import { type ReactNode, useEffect, useRef } from 'react';
-
-import { cn } from '../lib/utils';
+import * as S from './Popover.styled';
 
 export function Popover({
   open,
   onOpenChange,
-  align = 'left',
   trigger,
   children,
-  className,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  align?: 'left' | 'right';
   trigger: ReactNode;
   children: ReactNode;
-  className?: string;
 }) {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,19 +35,9 @@ export function Popover({
   }, [open, onOpenChange]);
 
   return (
-    <div className='relative inline-block' ref={rootRef}>
+    <S.PopoverWrapper ref={rootRef}>
       <div onClick={() => onOpenChange(!open)}>{trigger}</div>
-      {open ? (
-        <div
-          className={cn(
-            'absolute z-50 mt-2 w-[260px] rounded-lg border border-slate-200 bg-white shadow-lg shadow-slate-900/5',
-            align === 'right' ? 'right-0' : 'left-0',
-            className,
-          )}
-        >
-          {children}
-        </div>
-      ) : null}
-    </div>
+      {open ? <S.Popover>{children}</S.Popover> : null}
+    </S.PopoverWrapper>
   );
 }

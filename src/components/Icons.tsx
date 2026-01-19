@@ -49,6 +49,7 @@ export function IconChevronDown(props: SVGProps<SVGSVGElement>) {
 export function IconChevronLeft(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
+      style={{ height: '16px', width: '16px' }}
       viewBox='0 0 24 24'
       fill='none'
       stroke='currentColor'
@@ -63,6 +64,7 @@ export function IconChevronLeft(props: SVGProps<SVGSVGElement>) {
 export function IconChevronRight(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
+      style={{ height: '16px', width: '16px' }}
       viewBox='0 0 24 24'
       fill='none'
       stroke='currentColor'

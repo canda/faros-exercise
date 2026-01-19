@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 
 import { Avatar } from '../components/Avatar';
-import { Button } from '../components/Button';
+import { Button } from '../components/Button.styled';
 import { Chip } from '../components/Chip';
-import { EmployeeDrawer } from '../components/EmployeeDrawer';
+import { EmployeeDrawer } from '../components/EmployeeDrawer/EmployeeDrawer';
 import { EmployeeTable } from '../components/EmployeeTable';
 import {
   IconChevronLeft,
@@ -20,6 +20,7 @@ import type {
 } from '../lib/employees';
 import { getEmployeeDetails, getEmployees } from '../lib/employees';
 import { cn } from '../lib/utils';
+import * as S from './EmployeesPage.styled';
 
 type Filters = {
   accountsEnabled: boolean;
@@ -162,372 +163,368 @@ export function EmployeesPage() {
   }, [allTeams, teamSearch]);
 
   return (
-    <div className='min-h-full bg-slate-50 text-slate-900'>
-      <header className='border-b border-slate-200 bg-white'>
-        <div className='mx-auto flex max-w-[1160px] items-center justify-between px-6 py-3'>
-          <div className='flex items-center gap-3'>
-            <img
-              src='/icons/faros-logo.svg'
-              alt='Faros'
-              className='h-6 w-auto'
-            />
-            <div className='hidden items-center gap-2 text-xs font-medium text-slate-500 md:flex'>
-              <span className='rounded px-2 py-1 hover:bg-slate-50'>
-                Default Workspace
-              </span>
-              <span className='text-slate-300'>/</span>
-              <span className='rounded px-2 py-1 hover:bg-slate-50'>
-                Modules
-              </span>
-              <span className='text-slate-300'>/</span>
-              <span className='rounded px-2 py-1 hover:bg-slate-50'>
-                Scorecard
-              </span>
+    <S.PageWrapper>
+      <S.Header>
+        <S.HeaderWrapper>
+          <S.HeaderLeftSection>
+            <S.HeaderLogo src='/icons/faros-logo.svg' alt='Faros' />
+            <S.HeaderNavBar>
+              <S.NavItem>Default Workspace</S.NavItem>
+              <S.Separator></S.Separator>
+              <S.NavItem>Modules</S.NavItem>
+              <S.NavItem>Scorecard</S.NavItem>
+            </S.HeaderNavBar>
+          </S.HeaderLeftSection>
+          <S.HeaderRightSection>
+            {/* TODO: fix, this should have "personal" and "acme" links */}
+            <S.PersonalLabel>Personal</S.PersonalLabel>
+            <Avatar name='Acme' />
+          </S.HeaderRightSection>
+        </S.HeaderWrapper>
+      </S.Header>
+
+      <S.MainWrapper>
+        <S.Main>
+          <S.Breadcrumbs>
+            Admin Settings <S.BreadcrumbSeparator>›</S.BreadcrumbSeparator>{' '}
+            Organization Setup <S.BreadcrumbSeparator>›</S.BreadcrumbSeparator>{' '}
+            <S.BreadcrumbSelected>Employees Page</S.BreadcrumbSelected>
+          </S.Breadcrumbs>
+
+          <S.TopBar>
+            <div>
+              <S.PageTitle>Employees</S.PageTitle>
+              <S.PageDescription>
+                Easily assign employees to teams, include them for tracking in
+                team productivity stats, and manage their connected accounts.
+              </S.PageDescription>
             </div>
-          </div>
-          <div className='flex items-center gap-2 text-sm text-slate-600'>
-            <span className='hidden text-xs font-medium text-slate-500 sm:inline'>
-              Personal
-            </span>
-            <Avatar name='Acme' size={28} />
-          </div>
-        </div>
-      </header>
+            <Button variant='primary'>
+              {/* TODO: implement functionallity */}
+              <S.NewButtonContent>
+                <S.NewButtonIconWrapper>
+                  <S.StyledNewButtonIcon />
+                </S.NewButtonIconWrapper>
+                New
+              </S.NewButtonContent>
+            </Button>
+          </S.TopBar>
 
-      <main className='mx-auto max-w-[1160px] px-6 py-5'>
-        <div className='mb-4 text-xs font-medium text-slate-500'>
-          Admin Settings <span className='text-slate-300'>›</span> Organization
-          Setup <span className='text-slate-300'>›</span>{' '}
-          <span className='text-slate-700'>Employees Page</span>
-        </div>
+          <div className='mt-4 space-y-3'>
+            <div className='relative'>
+              <IconSearch className='pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400' />
+              <input
+                className={cn(
+                  'h-10 w-full rounded-md border border-slate-200 bg-white pl-9 pr-3 text-sm text-slate-800 shadow-sm',
+                  'focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20',
+                )}
+                placeholder='Search employees by name ...'
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
 
-        <div className='flex items-start justify-between gap-4'>
-          <div>
-            <h1 className='text-xl font-semibold text-slate-900'>Employees</h1>
-            <p className='mt-1 max-w-[640px] text-sm text-slate-500'>
-              Easily assign employees to teams, include them for tracking in
-              team productivity stats, and manage their connected accounts.
-            </p>
-          </div>
-          <Button variant='primary'>
-            <span className='inline-flex items-center gap-2'>
-              <span className='inline-flex h-4 w-4 items-center justify-center rounded bg-white/15'>
-                <IconPlus className='h-3.5 w-3.5 text-white' />
-              </span>
-              New
-            </span>
-          </Button>
-        </div>
-
-        <div className='mt-4 space-y-3'>
-          <div className='relative'>
-            <IconSearch className='pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400' />
-            <input
-              className={cn(
-                'h-10 w-full rounded-md border border-slate-200 bg-white pl-9 pr-3 text-sm text-slate-800 shadow-sm',
-                'focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20',
-              )}
-              placeholder='Search employees by name ...'
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-
-          <div className='flex flex-wrap items-center gap-2'>
-            <Popover
-              open={filterOpen}
-              onOpenChange={(open) => {
-                setFilterOpen(open);
-                if (!open) closeFilter();
-              }}
-              trigger={
-                <Button size='sm' className='gap-2'>
-                  <IconPlus className='h-4 w-4 text-sky-700' />
-                  Add Filter
-                </Button>
-              }
-            >
-              {filterPanel === 'root' ? (
-                <div className='p-2'>
-                  <div className='px-2 py-1.5 text-xs font-semibold tracking-wide text-slate-500'>
-                    FILTER BY
-                  </div>
-                  <FilterRow
-                    checked={filters.accountsEnabled}
-                    label='Accounts Connected'
-                    onCheckedChange={(checked) =>
-                      setFilters((f) => ({
-                        ...f,
-                        accountsEnabled: checked,
-                        accounts: checked ? f.accounts : [],
-                      }))
-                    }
-                    onOpenPanel={() => openPanel('accounts')}
-                  />
-                  <FilterRow
-                    checked={filters.teamsEnabled}
-                    label='Team'
-                    onCheckedChange={(checked) =>
-                      setFilters((f) => ({
-                        ...f,
-                        teamsEnabled: checked,
-                        teams: checked ? f.teams : [],
-                      }))
-                    }
-                    onOpenPanel={() => openPanel('teams')}
-                  />
-                  <FilterRow
-                    checked={filters.statusEnabled}
-                    label='Tracking Status'
-                    onCheckedChange={(checked) =>
-                      setFilters((f) => ({
-                        ...f,
-                        statusEnabled: checked,
-                        statuses: checked ? f.statuses : [],
-                      }))
-                    }
-                    onOpenPanel={() => openPanel('status')}
-                  />
-                </div>
-              ) : null}
-
-              {filterPanel === 'teams' ? (
-                <div className='p-2'>
-                  <PanelHeader
-                    title='Team'
-                    onBack={() => setFilterPanel('root')}
-                  />
-                  <div className='relative px-2 pb-2'>
-                    <IconSearch className='pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400' />
-                    <input
-                      className={cn(
-                        'h-9 w-full rounded-md border border-slate-200 bg-white pl-9 pr-3 text-sm text-slate-800 shadow-sm',
-                        'focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20',
-                      )}
-                      placeholder='Search team name...'
-                      value={teamSearch}
-                      onChange={(e) => setTeamSearch(e.target.value)}
+            <div className='flex flex-wrap items-center gap-2'>
+              <Popover
+                open={filterOpen}
+                onOpenChange={(open) => {
+                  setFilterOpen(open);
+                  if (!open) closeFilter();
+                }}
+                trigger={
+                  <Button size='sm' className='gap-2'>
+                    <IconPlus className='h-4 w-4 text-sky-700' />
+                    Add Filter
+                  </Button>
+                }
+              >
+                {/* TODO: move into reusable component */}
+                {filterPanel === 'root' ? (
+                  <div className='p-2'>
+                    <div className='px-2 py-1.5 text-xs font-semibold tracking-wide text-slate-500'>
+                      FILTER BY
+                    </div>
+                    <FilterRow
+                      checked={filters.accountsEnabled}
+                      label='Accounts Connected'
+                      onCheckedChange={(checked) =>
+                        setFilters((f) => ({
+                          ...f,
+                          accountsEnabled: checked,
+                          accounts: checked ? f.accounts : [],
+                        }))
+                      }
+                      onOpenPanel={() => openPanel('accounts')}
+                    />
+                    <FilterRow
+                      checked={filters.teamsEnabled}
+                      label='Team'
+                      onCheckedChange={(checked) =>
+                        setFilters((f) => ({
+                          ...f,
+                          teamsEnabled: checked,
+                          teams: checked ? f.teams : [],
+                        }))
+                      }
+                      onOpenPanel={() => openPanel('teams')}
+                    />
+                    <FilterRow
+                      checked={filters.statusEnabled}
+                      label='Tracking Status'
+                      onCheckedChange={(checked) =>
+                        setFilters((f) => ({
+                          ...f,
+                          statusEnabled: checked,
+                          statuses: checked ? f.statuses : [],
+                        }))
+                      }
+                      onOpenPanel={() => openPanel('status')}
                     />
                   </div>
+                ) : null}
 
-                  <div className='flex items-center justify-between px-2 pb-1 text-xs font-medium text-slate-500'>
-                    <button
-                      type='button'
-                      className='rounded px-1.5 py-1 hover:bg-slate-50'
-                      onClick={() => setDraftTeams([])}
-                    >
-                      Deselect all
-                    </button>
-                    <button
-                      type='button'
-                      className='rounded px-1.5 py-1 hover:bg-slate-50'
-                      onClick={() => setDraftTeams(allTeams)}
-                    >
-                      Select all
-                    </button>
-                  </div>
+                {filterPanel === 'teams' ? (
+                  <div className='p-2'>
+                    <PanelHeader
+                      title='Team'
+                      onBack={() => setFilterPanel('root')}
+                    />
+                    <div className='relative px-2 pb-2'>
+                      <IconSearch className='pointer-events-none absolute left-5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400' />
+                      <input
+                        className={cn(
+                          'h-9 w-full rounded-md border border-slate-200 bg-white pl-9 pr-3 text-sm text-slate-800 shadow-sm',
+                          'focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-500/20',
+                        )}
+                        placeholder='Search team name...'
+                        value={teamSearch}
+                        onChange={(e) => setTeamSearch(e.target.value)}
+                      />
+                    </div>
 
-                  <div className='max-h-[220px] overflow-auto px-2 pb-2'>
-                    {teamsFiltered.map((t) => (
-                      <label
-                        key={t}
-                        className='flex cursor-pointer items-center gap-2 rounded px-1.5 py-2 hover:bg-slate-50'
+                    <div className='flex items-center justify-between px-2 pb-1 text-xs font-medium text-slate-500'>
+                      <button
+                        type='button'
+                        className='rounded px-1.5 py-1 hover:bg-slate-50'
+                        onClick={() => setDraftTeams([])}
                       >
-                        <input
-                          type='checkbox'
-                          className='h-4 w-4 rounded border-slate-300 text-sky-700 focus:ring-sky-500'
-                          checked={draftTeams.includes(t)}
-                          onChange={(e) =>
-                            setDraftTeams((prev) =>
-                              e.target.checked
-                                ? [...prev, t]
-                                : prev.filter((x) => x !== t),
-                            )
-                          }
-                        />
-                        <span className='text-sm text-slate-700'>{t}</span>
-                      </label>
-                    ))}
-                    {teamsFiltered.length === 0 ? (
-                      <div className='px-1.5 py-3 text-sm text-slate-500'>
-                        No teams match “{teamSearch}”.
-                      </div>
-                    ) : null}
-                  </div>
+                        Deselect all
+                      </button>
+                      <button
+                        type='button'
+                        className='rounded px-1.5 py-1 hover:bg-slate-50'
+                        onClick={() => setDraftTeams(allTeams)}
+                      >
+                        Select all
+                      </button>
+                    </div>
 
-                  <PanelFooter
-                    onApply={() => {
-                      setFilters((f) => ({
-                        ...f,
-                        teamsEnabled: true,
-                        teams: draftTeams,
-                      }));
-                      closeFilter();
-                    }}
-                    onCancel={closeFilter}
-                  />
-                </div>
-              ) : null}
-
-              {filterPanel === 'accounts' ? (
-                <div className='p-2'>
-                  <PanelHeader
-                    title='Accounts Connected'
-                    onBack={() => setFilterPanel('root')}
-                  />
-
-                  <div className='px-2 pb-2'>
-                    {ALL_ACCOUNTS.filter((a) => a.type !== 'pagerduty').map(
-                      (a) => (
+                    <div className='max-h-[220px] overflow-auto px-2 pb-2'>
+                      {teamsFiltered.map((t) => (
                         <label
-                          key={a.type}
+                          key={t}
                           className='flex cursor-pointer items-center gap-2 rounded px-1.5 py-2 hover:bg-slate-50'
                         >
                           <input
                             type='checkbox'
                             className='h-4 w-4 rounded border-slate-300 text-sky-700 focus:ring-sky-500'
-                            checked={draftAccounts.includes(a.type)}
+                            checked={draftTeams.includes(t)}
                             onChange={(e) =>
-                              setDraftAccounts((prev) =>
+                              setDraftTeams((prev) =>
                                 e.target.checked
-                                  ? [...prev, a.type]
-                                  : prev.filter((x) => x !== a.type),
+                                  ? [...prev, t]
+                                  : prev.filter((x) => x !== t),
                               )
                             }
                           />
-                          {a.icon ? (
-                            <img
-                              src={a.icon}
-                              alt=''
-                              className='h-4 w-4 rounded-sm'
-                            />
-                          ) : null}
-                          <span className='text-sm text-slate-700'>
-                            {a.label}
-                          </span>
+                          <span className='text-sm text-slate-700'>{t}</span>
                         </label>
-                      ),
-                    )}
-                  </div>
+                      ))}
+                      {teamsFiltered.length === 0 ? (
+                        <div className='px-1.5 py-3 text-sm text-slate-500'>
+                          No teams match “{teamSearch}”.
+                        </div>
+                      ) : null}
+                    </div>
 
-                  <PanelFooter
-                    onApply={() => {
-                      setFilters((f) => ({
-                        ...f,
-                        accountsEnabled: true,
-                        accounts: draftAccounts,
-                      }));
-                      closeFilter();
-                    }}
-                    onCancel={closeFilter}
-                  />
-                </div>
+                    <PanelFooter
+                      onApply={() => {
+                        setFilters((f) => ({
+                          ...f,
+                          teamsEnabled: true,
+                          teams: draftTeams,
+                        }));
+                        closeFilter();
+                      }}
+                      onCancel={closeFilter}
+                    />
+                  </div>
+                ) : null}
+
+                {filterPanel === 'accounts' ? (
+                  <div className='p-2'>
+                    <PanelHeader
+                      title='Accounts Connected'
+                      onBack={() => setFilterPanel('root')}
+                    />
+
+                    <div className='px-2 pb-2'>
+                      {ALL_ACCOUNTS.filter((a) => a.type !== 'pagerduty').map(
+                        (a) => (
+                          <label
+                            key={a.type}
+                            className='flex cursor-pointer items-center gap-2 rounded px-1.5 py-2 hover:bg-slate-50'
+                          >
+                            <input
+                              type='checkbox'
+                              className='h-4 w-4 rounded border-slate-300 text-sky-700 focus:ring-sky-500'
+                              checked={draftAccounts.includes(a.type)}
+                              onChange={(e) =>
+                                setDraftAccounts((prev) =>
+                                  e.target.checked
+                                    ? [...prev, a.type]
+                                    : prev.filter((x) => x !== a.type),
+                                )
+                              }
+                            />
+                            {a.icon ? (
+                              <img
+                                src={a.icon}
+                                alt=''
+                                className='h-4 w-4 rounded-sm'
+                              />
+                            ) : null}
+                            <span className='text-sm text-slate-700'>
+                              {a.label}
+                            </span>
+                          </label>
+                        ),
+                      )}
+                    </div>
+
+                    <PanelFooter
+                      onApply={() => {
+                        setFilters((f) => ({
+                          ...f,
+                          accountsEnabled: true,
+                          accounts: draftAccounts,
+                        }));
+                        closeFilter();
+                      }}
+                      onCancel={closeFilter}
+                    />
+                  </div>
+                ) : null}
+
+                {filterPanel === 'status' ? (
+                  <div className='p-2'>
+                    <PanelHeader
+                      title='Tracking Status'
+                      onBack={() => setFilterPanel('root')}
+                    />
+                    <div className='px-2 pb-2'>
+                      {(['Included', 'Ignored'] as const).map((s) => (
+                        <label
+                          key={s}
+                          className='flex cursor-pointer items-center gap-2 rounded px-1.5 py-2 hover:bg-slate-50'
+                        >
+                          <input
+                            type='checkbox'
+                            className='h-4 w-4 rounded border-slate-300 text-sky-700 focus:ring-sky-500'
+                            checked={draftStatuses.includes(s)}
+                            onChange={(e) =>
+                              setDraftStatuses((prev) =>
+                                e.target.checked
+                                  ? [...prev, s]
+                                  : prev.filter((x) => x !== s),
+                              )
+                            }
+                          />
+                          <span className='text-sm text-slate-700'>{s}</span>
+                        </label>
+                      ))}
+                    </div>
+
+                    <PanelFooter
+                      onApply={() => {
+                        setFilters((f) => ({
+                          ...f,
+                          statusEnabled: true,
+                          statuses: draftStatuses,
+                        }));
+                        closeFilter();
+                      }}
+                      onCancel={closeFilter}
+                    />
+                  </div>
+                ) : null}
+              </Popover>
+
+              {filters.teamsEnabled ? (
+                <Chip
+                  onClick={() => {
+                    setFilterOpen(true);
+                    openPanel('teams');
+                  }}
+                  onRemove={() =>
+                    setFilters((f) => ({
+                      ...f,
+                      teamsEnabled: false,
+                      teams: [],
+                    }))
+                  }
+                >
+                  Team:{' '}
+                  {filters.teams.length
+                    ? `${filters.teams.slice(0, 2).join(', ')}${filters.teams.length > 2 ? '…' : ''}`
+                    : 'All'}
+                </Chip>
               ) : null}
 
-              {filterPanel === 'status' ? (
-                <div className='p-2'>
-                  <PanelHeader
-                    title='Tracking Status'
-                    onBack={() => setFilterPanel('root')}
-                  />
-                  <div className='px-2 pb-2'>
-                    {(['Included', 'Ignored'] as const).map((s) => (
-                      <label
-                        key={s}
-                        className='flex cursor-pointer items-center gap-2 rounded px-1.5 py-2 hover:bg-slate-50'
-                      >
-                        <input
-                          type='checkbox'
-                          className='h-4 w-4 rounded border-slate-300 text-sky-700 focus:ring-sky-500'
-                          checked={draftStatuses.includes(s)}
-                          onChange={(e) =>
-                            setDraftStatuses((prev) =>
-                              e.target.checked
-                                ? [...prev, s]
-                                : prev.filter((x) => x !== s),
-                            )
-                          }
-                        />
-                        <span className='text-sm text-slate-700'>{s}</span>
-                      </label>
-                    ))}
-                  </div>
-
-                  <PanelFooter
-                    onApply={() => {
-                      setFilters((f) => ({
-                        ...f,
-                        statusEnabled: true,
-                        statuses: draftStatuses,
-                      }));
-                      closeFilter();
-                    }}
-                    onCancel={closeFilter}
-                  />
-                </div>
+              {filters.accountsEnabled ? (
+                <Chip
+                  onClick={() => {
+                    setFilterOpen(true);
+                    openPanel('accounts');
+                  }}
+                  onRemove={() =>
+                    setFilters((f) => ({
+                      ...f,
+                      accountsEnabled: false,
+                      accounts: [],
+                    }))
+                  }
+                >
+                  Accounts:{' '}
+                  {filters.accounts.length
+                    ? `${filters.accounts.length} selected`
+                    : 'All'}
+                </Chip>
               ) : null}
-            </Popover>
 
-            {filters.teamsEnabled ? (
-              <Chip
-                onClick={() => {
-                  setFilterOpen(true);
-                  openPanel('teams');
-                }}
-                onRemove={() =>
-                  setFilters((f) => ({ ...f, teamsEnabled: false, teams: [] }))
-                }
-              >
-                Team:{' '}
-                {filters.teams.length
-                  ? `${filters.teams.slice(0, 2).join(', ')}${filters.teams.length > 2 ? '…' : ''}`
-                  : 'All'}
-              </Chip>
-            ) : null}
-
-            {filters.accountsEnabled ? (
-              <Chip
-                onClick={() => {
-                  setFilterOpen(true);
-                  openPanel('accounts');
-                }}
-                onRemove={() =>
-                  setFilters((f) => ({
-                    ...f,
-                    accountsEnabled: false,
-                    accounts: [],
-                  }))
-                }
-              >
-                Accounts:{' '}
-                {filters.accounts.length
-                  ? `${filters.accounts.length} selected`
-                  : 'All'}
-              </Chip>
-            ) : null}
-
-            {filters.statusEnabled ? (
-              <Chip
-                onClick={() => {
-                  setFilterOpen(true);
-                  openPanel('status');
-                }}
-                onRemove={() =>
-                  setFilters((f) => ({
-                    ...f,
-                    statusEnabled: false,
-                    statuses: [],
-                  }))
-                }
-              >
-                Status:{' '}
-                {filters.statuses.length ? filters.statuses.join(', ') : 'All'}
-              </Chip>
-            ) : null}
+              {filters.statusEnabled ? (
+                <Chip
+                  onClick={() => {
+                    setFilterOpen(true);
+                    openPanel('status');
+                  }}
+                  onRemove={() =>
+                    setFilters((f) => ({
+                      ...f,
+                      statusEnabled: false,
+                      statuses: [],
+                    }))
+                  }
+                >
+                  Status:{' '}
+                  {filters.statuses.length
+                    ? filters.statuses.join(', ')
+                    : 'All'}
+                </Chip>
+              ) : null}
+            </div>
           </div>
-        </div>
 
-        <div className={cn('mt-4 flex gap-4', drawerEmployee ? '' : '')}>
           <div className='min-w-0 flex-1'>
             <EmployeeTable
               employees={pageEmployees}
@@ -537,49 +534,48 @@ export function EmployeesPage() {
               onView={(e) => setDrawerEmployeeId(e.id)}
             />
 
-            <div className='mt-2 flex items-center justify-end gap-3 text-sm text-slate-600'>
-              <div className='text-xs text-slate-500'>
+            <S.TablePagination>
+              <S.TablePaginationLabel>
                 {filtered.length === 0 ? '0' : `${start + 1}-${end}`} of{' '}
                 {filtered.length}
-              </div>
-              <button
+              </S.TablePaginationLabel>
+              <S.TablePaginationButton
                 type='button'
-                className='inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50'
                 onClick={() => setPage((p) => Math.max(0, p - 1))}
                 disabled={safePage === 0}
                 aria-label='Previous page'
               >
-                <IconChevronLeft className='h-4 w-4' />
-              </button>
-              <button
+                <IconChevronLeft />
+              </S.TablePaginationButton>
+              <S.TablePaginationButton
                 type='button'
-                className='inline-flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50'
                 onClick={() => setPage((p) => Math.min(maxPage, p + 1))}
                 disabled={end >= filtered.length}
                 aria-label='Next page'
               >
-                <IconChevronRight className='h-4 w-4' />
-              </button>
-            </div>
+                <IconChevronRight />
+              </S.TablePaginationButton>
+            </S.TablePagination>
           </div>
+        </S.Main>
 
-          {drawerEmployee && drawerInitialDetails ? (
-            <EmployeeDrawer
-              employee={drawerEmployee}
-              initialDetails={drawerInitialDetails}
-              onClose={() => setDrawerEmployeeId(null)}
-              onSave={(details) => {
-                setEmployeeOverrides((prev) => ({
-                  ...prev,
-                  [drawerEmployee.id]: details,
-                }));
-                setDrawerEmployeeId(null);
-              }}
-            />
-          ) : null}
-        </div>
-      </main>
-    </div>
+        {/* TODO: fix issue where employee is not updated when clicking different employees */}
+        {drawerEmployee && drawerInitialDetails ? (
+          <EmployeeDrawer
+            employee={drawerEmployee}
+            initialDetails={drawerInitialDetails}
+            onClose={() => setDrawerEmployeeId(null)}
+            onSave={(details) => {
+              setEmployeeOverrides((prev) => ({
+                ...prev,
+                [drawerEmployee.id]: details,
+              }));
+              setDrawerEmployeeId(null);
+            }}
+          />
+        ) : null}
+      </S.MainWrapper>
+    </S.PageWrapper>
   );
 }
 

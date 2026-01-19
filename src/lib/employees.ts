@@ -50,6 +50,7 @@ export function getEmployees(): Employee[] {
   return employees.map((e) => {
     const accounts: AccountType[] = [];
     if (e.identity?.vcsUsers?.length) accounts.push('github');
+    // TODO: confirm if tms can be assumed to be Jira
     if (e.identity?.tmsUsers?.length) accounts.push('jira');
     if (e.identity?.calUsers?.length) accounts.push('google-calendar');
     if (e.identity?.imsUsers?.length) accounts.push('pagerduty');

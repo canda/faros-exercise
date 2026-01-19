@@ -1,18 +1,8 @@
 import { useMemo, useState } from 'react';
 
-import { cn } from '../lib/utils';
+import * as S from './Avatar.styled';
 
-export function Avatar({
-  name,
-  src,
-  size = 28,
-  className,
-}: {
-  name: string;
-  src?: string;
-  size?: number;
-  className?: string;
-}) {
+export function Avatar({ name, src }: { name: string; src?: string }) {
   const [broken, setBroken] = useState(false);
   const initials = useMemo(() => {
     const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -22,24 +12,12 @@ export function Avatar({
   }, [name]);
 
   return (
-    <div
-      className={cn(
-        'inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-100 text-[11px] font-semibold text-slate-600',
-        className,
-      )}
-      style={{ width: size, height: size }}
-      aria-label={name}
-    >
+    <S.Wrapper aria-label={name}>
       {!broken && src ? (
-        <img
-          src={src}
-          alt=''
-          className='h-full w-full object-cover'
-          onError={() => setBroken(true)}
-        />
+        <S.Image src={src} alt={name} onError={() => setBroken(true)} />
       ) : (
         initials
       )}
-    </div>
+    </S.Wrapper>
   );
 }
