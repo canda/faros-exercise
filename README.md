@@ -1,6 +1,7 @@
 # Faros Employees Page (Exercise)
 
 This repo contains a React + Tailwind (Vite) implementation of the Employees Page UI.
+Running demo can be found at https://faros-exercise.vercel.app/
 
 ## Prereqs
 
@@ -10,7 +11,6 @@ This repo contains a React + Tailwind (Vite) implementation of the Employees Pag
 
 ```bash
 nvm use
-cd web
 npm install
 npm run dev
 ```
@@ -19,5 +19,5 @@ Open the URL printed by Vite (usually `http://localhost:5173`).
 
 ## Notes
 
-- Employee data comes from `web/src/data/employees.json`.
-- Static account icons live in `web/public/icons`.
+- Employee data comes from `src/data/employees.json`.
+- Static account icons live in `public/icons`.

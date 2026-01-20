@@ -4,7 +4,6 @@ import type { TrackingStatus } from '../../lib/employees';
 
 export const Wrapper = styled.aside`
   display: flex;
-  height: 100%;
   width: 360px;
   flex-shrink: 0;
   flex-direction: column;
@@ -34,7 +33,6 @@ export const EmployeeName = styled.div`
   text-overflow: ellipsis;
 `;
 
-// mt-1 flex items-center gap-2
 export const StatusPillContainer = styled.div`
   margin-top: 0.25rem;
   display: flex;

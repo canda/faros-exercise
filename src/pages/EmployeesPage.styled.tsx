@@ -6,6 +6,8 @@ export const PageWrapper = styled.div`
   min-height: 100%;
   background-color: #f8fafc;
   color: #0f172a;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Header = styled.header`
@@ -133,6 +135,8 @@ export const StyledNewButtonIcon = styled(IconPlus)`
 export const MainWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  flex-grow: 1;
+  align-items: stretch;
 `;
 
 export const TablePagination = styled.div`
